@@ -14,21 +14,6 @@ const theme = createTheme({
     ]
   }
 });
-// const initialTodos = [
-
-//   {
-//     id: uuidv4(),
-//     title: "إنهاء المشروع",
-//     details: "إكمال العرض التقديمي الخاص بمشروع الشركة وتسليمه قبل الموعد النهائي.",
-//     isCompleted: false
-//   },
-//   {
-//     id: uuidv4(),
-//     title: "زيارة الطبيب",
-//     details: "زيارة طبيب الأسنان للفحص الدوري وتنظيف الأسنان.",
-//     isCompleted: false
-//   },
-// ];
 
 function App() {
 
