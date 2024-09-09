@@ -1,21 +1,32 @@
 // other libraries
 import {v4 as uuidv4} from 'uuid';
+const initialTodos = [
 
+    {
+      id: uuidv4(),
+      title: "إنهاء المشروع",
+      details: "إكمال العرض التقديمي الخاص بمشروع الشركة وتسليمه قبل الموعد النهائي.",
+      isCompleted: false
+    },
+    {
+      id: uuidv4(),
+      title: "زيارة الطبيب",
+      details: "زيارة طبيب الأسنان للفحص الدوري وتنظيف الأسنان.",
+      isCompleted: false
+    },
+  ];
 function TodosReducer(currenttodos,action) {
     switch(action.type){
         case "adding":
             {
                 let newTask ={id:uuidv4(),title:action.payload.task.title,details:action.payload.task.details,isCompleted:false}
                 const upTodos=[newTask,...currenttodos];
-                localStorage.setItem("todos",JSON.stringify(upTodos));
                 return upTodos;
             }
         case "deleting": {
                 const newTodos=currenttodos.filter((todo)=>{
                     return todo.id !==action.payload.todoInfo.id;
                 })
-                
-                localStorage.setItem("todos",JSON.stringify(newTodos));
                 return newTodos;
         }
         case "updating": {
@@ -30,12 +41,10 @@ function TodosReducer(currenttodos,action) {
                 }
                 return todo;
             }) 
-            localStorage.setItem("todos",JSON.stringify(newtodos)); 
             return newtodos
         }
         case "get": 
-            const storageTodos=JSON.parse(localStorage.getItem('todos')) ?? [];
-            return storageTodos;
+            return initialTodos;
         case "checking":{
             const updatedTodos=currenttodos.map((todo)=>{
                 if(todo.id===action.payload.todoInfo.id) {
@@ -44,7 +53,6 @@ function TodosReducer(currenttodos,action) {
                 }
                 return todo;
             })
-            localStorage.setItem("todos",JSON.stringify(updatedTodos));
             return updatedTodos
         }
         default:{
