@@ -4,62 +4,62 @@ const initialTodos = [
 
     {
       id: uuidv4(),
-      title: "إنهاء المشروع",
-      details: "إكمال العرض التقديمي الخاص بمشروع الشركة وتسليمه قبل الموعد النهائي.",
+      title: "Finish the project",
+      details: "Complete the company project presentation and submit it before the deadline.",
       isCompleted: false
     },
     {
       id: uuidv4(),
-      title: "زيارة الطبيب",
-      details: "زيارة طبيب الأسنان للفحص الدوري وتنظيف الأسنان.",
+      title: "Visit the doctor",
+      details: "Visit the dentist for a regular check-up and teeth cleaning.",
       isCompleted: false
     },
   ];
-function TodosReducer(currenttodos,action) {
-    switch(action.type){
+
+function TodosReducer(currenttodos, action) {
+    switch(action.type) {
         case "adding":
             {
-                let newTask ={id:uuidv4(),title:action.payload.task.title,details:action.payload.task.details,isCompleted:false}
-                const upTodos=[newTask,...currenttodos];
-                return upTodos;
+                let newTask = {id: uuidv4(), title: action.payload.task.title, details: action.payload.task.details, isCompleted: false};
+                const updatedTodos = [newTask, ...currenttodos];
+                return updatedTodos;
             }
         case "deleting": {
-                const newTodos=currenttodos.filter((todo)=>{
-                    return todo.id !==action.payload.todoInfo.id;
-                })
+                const newTodos = currenttodos.filter((todo) => {
+                    return todo.id !== action.payload.todoInfo.id;
+                });
                 return newTodos;
         }
         case "updating": {
-            const newtodos=currenttodos.map((todo)=>{
-                if(todo.id===action.payload.todoInfo.id){ 
-                    if(action.payload.updatedTodo.title.length>0){
-                        todo.title=action.payload.updatedTodo.title;
+            const newTodos = currenttodos.map((todo) => {
+                if (todo.id === action.payload.todoInfo.id) { 
+                    if (action.payload.updatedTodo.title.length > 0) {
+                        todo.title = action.payload.updatedTodo.title;
                     }
-                    if(action.payload.updatedTodo.details.length>0){
-                        todo.details=action.payload.updatedTodo.details;
+                    if (action.payload.updatedTodo.details.length > 0) {
+                        todo.details = action.payload.updatedTodo.details;
                     }
                 }
                 return todo;
-            }) 
-            return newtodos
+            });
+            return newTodos;
         }
         case "get": 
             return initialTodos;
-        case "checking":{
-            const updatedTodos=currenttodos.map((todo)=>{
-                if(todo.id===action.payload.todoInfo.id) {
-                    const updatedTodo={...todo,isCompleted:!todo.isCompleted}
+        case "checking": {
+            const updatedTodos = currenttodos.map((todo) => {
+                if (todo.id === action.payload.todoInfo.id) {
+                    const updatedTodo = {...todo, isCompleted: !todo.isCompleted};
                     return updatedTodo; 
                 }
                 return todo;
-            })
-            return updatedTodos
+            });
+            return updatedTodos;
         }
-        default:{
-            throw Error("unknown action type " + action.type)
+        default: {
+            throw Error("unknown action type " + action.type);
         }
-            
     }
 }
 
-export default TodosReducer
+export default TodosReducer;
